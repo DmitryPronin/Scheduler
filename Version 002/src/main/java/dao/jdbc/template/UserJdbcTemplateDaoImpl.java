@@ -28,6 +28,10 @@ public class UserJdbcTemplateDaoImpl implements UserDao {
 
     private static final String SQL_SELECT_BY_NAME = "SELECT * FROM users WHERE name = ?";
 
+    private static final String SQL_UPDATE_BY_ID = "UPDATE users SET name = ?, surname = ? WHERE id = ?";
+
+    private static final String SQL_DELETE_BY_ID = "DELETE FROM users WHERE id = ?";
+
 
 
     private JdbcTemplate template;
@@ -55,10 +59,7 @@ public class UserJdbcTemplateDaoImpl implements UserDao {
     };
 
 
-    public List<User> findAllByName(String name) {
-        List<User> userList = template.query(SQL_SELECT_BY_NAME,userRowMapper, name);
-        return userList;
-    }
+
 
     public void save(final User model) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -80,11 +81,17 @@ public class UserJdbcTemplateDaoImpl implements UserDao {
         return template.queryForObject(SQL_Select_USER_BY_ID, userRowMapper,id);
     }
 
-    public void update(User model) {
-
+    public List<User> findAllByName(String name) {
+        List<User> userList = template.query(SQL_SELECT_BY_NAME,userRowMapper, name);
+        return userList;
     }
 
-    public void delete(int i) {
+    public void update(User model) {
+        template.update(SQL_UPDATE_BY_ID, model.getName(), model.getSurname(), model.getId());
+    }
+
+    public void delete(int id) {
+        template.update(SQL_DELETE_BY_ID, id);
 
     }
 

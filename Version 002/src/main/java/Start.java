@@ -19,8 +19,14 @@ public class Start {
         System.out.println(users);
         List<User> userList= userDao.findAll();
         List<User> userListByName = userDao.findAllByName("Dima");
-        //System.out.println(userList);
+        System.out.println(userList);
+        System.out.println("============================");
         System.out.println(userListByName);
+        System.out.println("============================");
+        User user = new User(1,"Yasya", "Yaroslava","google.cion");
+        userDao.update(user);
+        System.out.println("============================");
+        userDao.delete(2);
 
 }
 
